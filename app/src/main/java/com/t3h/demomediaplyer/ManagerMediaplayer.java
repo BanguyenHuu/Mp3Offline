@@ -30,6 +30,12 @@ public class ManagerMediaplayer {
             mediaPlayer.start();
         }
     }
+    public int getCurrentPosition(){
+        if (mediaPlayer!=null){
+            return mediaPlayer.getCurrentPosition();
+        }
+        return 0;
+    }
 
     public void pause() {
         if (mediaPlayer != null && mediaPlayer.isPlaying()) {

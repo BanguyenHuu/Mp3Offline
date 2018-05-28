@@ -4,22 +4,9 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:background="@color/colorPrimary">
-
-        <ImageButton
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:background="?actionBarItemBackground"
-            android:padding="16dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_arrow_back_white_24dp" />
-    </RelativeLayout>
-
+    >
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rc_audio"
         android:layout_width="match_parent"

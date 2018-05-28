@@ -18,6 +18,7 @@
 
         </activity>
         <service android:name=".ServiceMediaOffline"/>
+        <activity android:name=".PlayActivity"/>
     </application>
 
 </manifest>

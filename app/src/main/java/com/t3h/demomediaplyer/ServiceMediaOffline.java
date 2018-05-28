@@ -24,6 +24,8 @@ public class ServiceMediaOffline extends Service{
     private ManagerMediaplayer managerMediaplayer;
     private AudioManager audioManager;
 
+    public static  int CURRENT_POSITON;
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {//lắng nghe yêu cầu kết nối từ các đt khác
@@ -37,8 +39,6 @@ public class ServiceMediaOffline extends Service{
         managerMediaplayer = new ManagerMediaplayer();
         audioManager = new AudioManager(this);
         audioManager.getAllListAudio();
-
-
     }
 
     public List<AudioOffline> getAudioOfflines(){
@@ -54,7 +54,22 @@ public class ServiceMediaOffline extends Service{
         }
         managerMediaplayer.play();
 
+
     }
+    public void pause(){
+        managerMediaplayer.pause();
+    }
+
+    public int getCurrentPosition(){
+        return managerMediaplayer.getCurrentPosition();
+    }
+    public void stop(){
+        managerMediaplayer.stop();
+    }
+    public void release(){
+        managerMediaplayer.release();
+    }
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -82,7 +97,7 @@ public class ServiceMediaOffline extends Service{
                 PendingIntent.getActivity(this,100,intentPending,PendingIntent.FLAG_UPDATE_CURRENT);
         AudioOffline date= audioManager.getAudioOfflines().get(position);
         NotificationCompat.Builder builder=new NotificationCompat.Builder(this);
-        builder.setSmallIcon(R.drawable.ic_arrow_back_white_24dp);
+        //builder.setSmallIcon(R.drawable.ic_arrow_back_white_24dp);
         builder.setContentTitle(date.getDisplayName());
         builder.setLargeIcon(
                 BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher));
@@ -93,13 +108,10 @@ public class ServiceMediaOffline extends Service{
         startForeground(1,builder.build());
     }
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();
         managerMediaplayer.release();
         managerMediaplayer=null;
-
-
     }
 }

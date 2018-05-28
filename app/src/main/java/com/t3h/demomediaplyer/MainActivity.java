@@ -15,18 +15,19 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity implements AudioAdapter.IAudioAdapter {
     private RecyclerView rcAudio;
     private AudioAdapter adapter;
-    private ServiceMediaOffline service;
+    public static ServiceMediaOffline service;
+   public static ServiceConnection conn;
 
     private void initService(){
         Intent intentService=new Intent();
         intentService.setClass(this,ServiceMediaOffline.class);
         startService(intentService);
-        ServiceConnection conn=new ServiceConnection() {
+        conn=new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
                 ServiceMediaOffline.MyBinder binder=(ServiceMediaOffline.MyBinder) iBinder;
                         service=binder.getService();
-                        adapter.notifyDataSetChanged();
+                       adapter.notifyDataSetChanged();
             }
             @Override
             public void onServiceDisconnected(ComponentName componentName) {
@@ -35,9 +36,7 @@ public class MainActivity extends AppCompatActivity implements AudioAdapter.IAud
         Intent intent=new Intent();
         intent.setClass(this,ServiceMediaOffline.class);
         bindService(intent,conn,BIND_AUTO_CREATE);//intent chaỵ đến serviceMedia - > chạy onBinhd()
-    }
-
-
+        }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,10 +76,15 @@ public class MainActivity extends AppCompatActivity implements AudioAdapter.IAud
 //            e.printStackTrace();
 //        }
 
-        service.play(position);
+        ServiceMediaOffline.CURRENT_POSITON=position;
+        Intent intent =new Intent();
+        intent.setClass(this,PlayActivity.class);
+        unbindService(conn);
+        startActivity(intent);
+        finish();
 
-        service.createNotifycation(position);
-
+        service.play(ServiceMediaOffline.CURRENT_POSITON);
+        service.createNotifycation(ServiceMediaOffline.CURRENT_POSITON);
     }
 
     @Override

@@ -49,6 +49,7 @@ public class AudioManager {
         int indexDateAdd = c.getColumnIndex("date_added");
         int indexAlbumId = c.getColumnIndex("album_id");
         int indexDuration = c.getColumnIndex("duration");
+
         while (!c.isAfterLast()){
             long id = c.getLong(indexId);
             String data = c.getString(indexData);
@@ -71,7 +72,6 @@ public class AudioManager {
             c.moveToNext();
         }
         c.close();
-
     }
 
     public List<AudioOffline> getAudioOfflines() {
